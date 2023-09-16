@@ -1,0 +1,189 @@
+const level1 = {
+    aroma: "Pleasing smell",
+  };
+  const level2 = {
+    nepper: "Salt's partner",
+  }
+  const level3 ={
+    halt: "put a stop to",
+  }
+
+  const body = document.body;
+  const quitBtn = document.querySelector("#quit");
+  const message = document.getElementById("message");
+  const hintRef = document.querySelector(".hint-ref");
+
+
+
+  const letterContainer = document.getElementById("letter-container");
+  const userInpSection = document.getElementById("user-input-section");
+  const resultText = document.getElementById("result");
+  const word = document.getElementById("word");
+  const wrapper = document.querySelector(".wrapper")
+  let words = Object.keys(level1);  
+
+  let level = 0;
+  let SCORE = 0
+    let randomWord = "",
+    randomHint = "";
+    let winCount = 0,
+    lossCount = 0;
+
+
+
+
+
+    const menu = () =>{
+      const controls = document.createElement("div")
+      controls.className="controls-container";
+      controls.innerHTML=`<div id="result"></div>
+      <div id="word"></div>
+      <button id="start">Simulan</button>
+      <button id="mechanics">Mekaniko</button>
+      <button id="about_us">Tungkol sa Amin</button>`;
+      body.appendChild(controls);
+      start(controls);
+      mechanics(controls);
+      aboutus(controls);
+
+    }
+
+    const start = (controls) =>{
+      const startBtn = controls.querySelector("#start");
+      startBtn.addEventListener("click", e => {
+        body.removeChild(controls);
+        console.log("start")
+        level_decider()
+      })
+    } 
+
+    const mechanics = (controls) => {
+      const mechanicBtn = controls.querySelector("#mechanics");
+      mechanicBtn.addEventListener("click", e => {
+        console.log('hello')
+      })
+    }
+
+    const aboutus = (controls) =>{
+      const aboutBtn = controls.querySelector("#about_us");
+      aboutBtn.addEventListener("click", e => {
+        console.log('Iam')
+      })
+    }
+
+
+    const level_decider = () =>{
+      console.log("level_decider")
+      if (level == 1)  {
+        words = Object.keys(level2);
+      } else if (level == 2){
+        words = Object.keys(level3);
+      }
+        winner_condition(level)
+    }
+
+    const winner_condition = (level) =>{
+      console.log("winner_condition")
+      if (level == 3){
+        winnder_message()
+      }else
+      {init(level)}
+
+    }
+
+    
+
+    const generateRandomValue = (array) => Math.floor(Math.random() * array.length);
+
+    const generateWord = (level) =>{
+      console.log("generate")
+      userInpSection.innerText = "";
+      randomWord = words[generateRandomValue(words)];
+      if (level == 0){
+        randomHint = level1[randomWord];
+      }else if (level == 1){
+        randomHint = level2[randomWord];
+      }else if (level == 2){
+        randomHint = level3[randomWord];}    
+      hintRef.innerHTML = `<div id="wordHint">
+      <span>Bugtong-bugtong: </span>${randomHint}</div>`;
+      let displayItem = "";
+      randomWord.split("").forEach((value) => {
+        displayItem += '<span class="inputSpace">_ </span>';
+      });
+    
+      //Display each element as span
+      userInpSection.innerHTML = displayItem;
+      userInpSection.innerHTML += `<div id='chanceCount'>Natitirang Pag-asa: ${lossCount}</div>`;
+      userInpSection.innerHTML += `<div id='levelCount'>Baitang: ${level+1}</div>`;
+    }
+
+
+    losing_message = () =>{}
+    winnder_message = () =>{}
+
+    const init = (level) =>{
+      console.log("init")
+
+      generateWord()
+      close.addEventListener(
+        game_proccesor()
+      )
+      if (winround){
+        score + 1
+        if(wingame){
+          winner_messager()
+          Continue.addEventListener(
+            menu()
+          )
+        }
+      }
+      if (losegame){
+        losing_message()
+        restart.addEventListener(
+          level_decider()
+        )
+        exit.addEventListener(
+          menu()
+        )
+      }
+
+    }
+
+    game_proccesor = () =>{
+      menu()
+      
+    }
+    
+    game_proccesor()
+
+    const canvas = document.getElementById('maincanvas');
+    const ctx = canvas.getContext('2d');
+
+    const canvas_width=canvas.width=700;
+    const canvas_height=canvas.heigth=100;
+
+    let parallaxspeed=0.5;
+
+    const bg_layer = new Image();
+    bg_layer.src='paralllax.png';
+
+    let x=0;
+    let x2= 1600
+
+    function animate(){
+        ctx.clearRect(0,0,canvas_width,canvas_height)
+        ctx.drawImage(bg_layer, x,0,2048,150);
+        ctx.drawImage(bg_layer, x2,0,2048,150);
+        if (x< -2048) x=2048 + x2 - parallaxspeed;
+        else x -= parallaxspeed;
+        if (x2< -2048) x2=2048 + x - parallaxspeed;
+        else x2 -= parallaxspeed;
+        requestAnimationFrame(animate);
+    }
+    animate()     
+
+
+
+
+
